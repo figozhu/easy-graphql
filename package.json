@@ -1,0 +1,31 @@
+{
+  "name": "easy-graphql",
+  "version": "0.0.1",
+  "description": "easy way for using GraphQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/figozhu/easy-graphql.git"
+  },
+  "keywords": [
+    "GraphQL"
+  ],
+  "author": "FigoZhu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/figozhu/easy-graphql/issues"
+  },
+  "homepage": "https://github.com/figozhu/easy-graphql#readme",
+  "dependencies": {
+    "graphql-tools": "^2.6.1",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.11.7"
+  }
+}

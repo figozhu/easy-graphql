@@ -1,0 +1,6 @@
+# user schema
+type User {
+    uid : ID!
+    name : String!
+    avatar : String!
+}

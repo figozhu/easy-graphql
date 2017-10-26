@@ -1,0 +1,8 @@
+# post schema
+type Post {
+    pid : ID!
+    title : String!
+    content : String!
+    auhtor : User!
+}
+
