@@ -1,5 +1,7 @@
 # easy-graphql
 
+[![npm version](https://badge.fury.io/js/easy-graphql.svg)](https://badge.fury.io/js/easy-graphql)
+
 Easy way for using GraphQL.
 
 Star is welcome.
@@ -92,12 +94,12 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.post('/restful', async (req, res) => {
-    let queryStr = req.body;
+    let queryObj = req.body;
     
     let result;
     try {
         // using with your restful service
-        result = await easyGraphqlObj.queryGraphQL(queryStr);
+        result = await easyGraphqlObj.queryGraphQL(queryObj);
     } catch (err) {
         console.error(err);
         res.json({code : -1, reason : "GraphQL error"});

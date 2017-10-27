@@ -22,11 +22,11 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.post('/restful', async (req, res) => {
-    let queryStr = req.body;
+    let queryObj = req.body;
     
     let result;
     try {
-        result = await easyGraphqlObj.queryGraphQL(queryStr);
+        result = await easyGraphqlObj.queryGraphQL(queryObj);
     } catch (err) {
         console.error(err);
         res.json({code : -1, reason : "GraphQL error"});
