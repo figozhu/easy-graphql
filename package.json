@@ -20,12 +20,13 @@
   },
   "homepage": "https://github.com/figozhu/easy-graphql#readme",
   "dependencies": {
+    "graphql": "^0.11.7",
+    "graphql-tag": "^2.5.0",
     "graphql-tools": "^2.6.1",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
     "express": "^4.16.2",
-    "express-graphql": "^0.6.11",
-    "graphql": "^0.11.7"
+    "express-graphql": "^0.6.11"
   }
 }

@@ -20,25 +20,101 @@ or alternatively using npm:
 npm install --save easy-graphql
 ```
 
-## Step 1
+### Step 1
 Choose a base directory
 
-## Step 2
+### Step 2
 Define your entity's schema
 1. Create a sub directory under the base directory
 2. Each entity must create a file named `schema.graphqls` under the above sub directory
 
-## Step 3
+### Step 3
 Define your query
 All entities' query must create a file named `query.graphqls` under the base directory
 
-## Step 4
+### Step 4
 Implement your resolvers
 Each entity's resolver must create a file named `resolvers.js` under the above sub directory
 
+## API
+
+- Init
+
+new an eash-graphql object:
+
+```javascript
+const path = require('path');
+
+const easyGraphqlModule = require('easy-graphql');
+
+const basePath = path.join(__dirname, 'graphql');
+const easyGraphqlObj = new easyGraphqlModule(basePath);
+```
+
+- Get the GraphQL Schema Object:
+
+```getSchema()```
+
+Using with `express-graphql` middleware:
+
+```javascript
+const express = require('express');
+const graphqlHTTP = require('express-graphql');
+
+const allSchema = easyGraphqlObj.getSchema();
+
+// using with express-graphql middleware
+app.use('/graphql', graphqlHTTP({
+    schema : allSchema,
+    graphiql : true,
+}));
+```
+
+- Execute the GraphQL query
+
+```queryGraphQL(requestObj)```
+
+For example, in your system, the response format is:
+
+```
+{
+    "code" : 0,
+    "reason" : "success",
+    "data" : {...}
+}
+```
+
+So you cannot use `express-graphql` middleware, then you need an function can do the GraphQL query.
+
+```javascript
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+app.post('/restful', async (req, res) => {
+    let queryStr = req.body;
+    
+    let result;
+    try {
+        // using with your restful service
+        result = await easyGraphqlObj.queryGraphQL(queryStr);
+    } catch (err) {
+        console.error(err);
+        res.json({code : -1, reason : "GraphQL error"});
+        return;
+    }
+    
+    res.json({
+        code : 0,
+        reason : "success",
+        data : result.data,
+    });
+});
+```
+
 ## Example
 
-An example for using easy-graphql with Express in `test` directory:
+An example for using easy-graphql with Express in `test` directory(`express-test.js`):
 
 ```
 test
@@ -225,6 +301,7 @@ The result is:
   }
 }
 ```
+
 
 
 
