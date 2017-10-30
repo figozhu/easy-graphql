@@ -1,6 +1,6 @@
 {
   "name": "easy-graphql",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "easy way for using GraphQL",
   "main": "index.js",
   "scripts": {
