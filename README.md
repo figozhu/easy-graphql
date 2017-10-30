@@ -35,8 +35,8 @@ Define your query
 All entities' query must create a file named `query.graphqls` under the base directory
 
 ### Step 4
-Create resolvers directory
-Each entity's resolver must create a file named `resolvers.js` under the above sub directory
+Create resolvers directory named `resolvers` under the base directory
+Each entity's resolver must create a file named `xxx_resolvers.js` under the above sub directory
 
 ## API
 
