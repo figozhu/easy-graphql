@@ -26,7 +26,7 @@ app.post('/restful', async (req, res) => {
     
     let result;
     try {
-        result = await easyGraphqlObj.queryGraphQL(queryObj);
+        result = await easyGraphqlObj.queryGraphQLAsync(queryObj, {context: req});
     } catch (err) {
         console.error(err);
         res.json({code : -1, reason : "GraphQL error"});

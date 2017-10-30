@@ -26,23 +26,23 @@ npm install --save easy-graphql
 Choose a base directory
 
 ### Step 2
-Define your entity's schema
-1. Create a sub directory under the base directory
-2. Each entity must create a file named `schema.graphqls` under the above sub directory
+Create schemas directory
+1. Create a sub directory named `schemas` under the base directory
+2. Each entity must create a file named `xxx_schema.graphqls` under the above sub directory
 
 ### Step 3
 Define your query
 All entities' query must create a file named `query.graphqls` under the base directory
 
 ### Step 4
-Implement your resolvers
+Create resolvers directory
 Each entity's resolver must create a file named `resolvers.js` under the above sub directory
 
 ## API
 
 - Init
 
-new an eash-graphql object:
+new an easy-graphql object:
 
 ```javascript
 const path = require('path');
@@ -74,7 +74,15 @@ app.use('/graphql', graphqlHTTP({
 
 - Execute the GraphQL query
 
-```queryGraphQL(requestObj)```
+```javascript
+/**
+ * do the GraphQL query execute
+ * @param {*} requestObj -  GraphQL query object {query: "..."}
+ * @param {*} context - [optional] query context
+ * @returns {Promise} - GraphQL execute promise 
+ */
+queryGraphQLAsync(requestObj, {context})
+```
 
 For example, in your system, the response format is:
 
@@ -99,7 +107,7 @@ app.post('/restful', async (req, res) => {
     let result;
     try {
         // using with your restful service
-        result = await easyGraphqlObj.queryGraphQL(queryObj);
+        result = await easyGraphqlObj.queryGraphQL(queryObj, {context: req});
     } catch (err) {
         console.error(err);
         res.json({code : -1, reason : "GraphQL error"});
@@ -123,13 +131,13 @@ test
 ├── express-test.js
 ├── fakeDB.js
 └── graphql
-    ├── post
-    │   ├── resolver.js
-    │   └── schema.graphqls
     ├── query.graphqls
-    └── user
-        ├── resolver.js
-        └── schema.graphqls
+    ├── resolvers
+    │   ├── post_resolver.js
+    │   └── user_resolver.js
+    └── schemas
+        ├── post_schema.graphqls
+        └── user_schema.graphqls
 ```
 
 For example, we have some simple blog system with two entities (`post` and `user`)
@@ -154,10 +162,9 @@ Create the base directory `graphql`
 
 ### Step 2
 
-Define the entities' schema
-Create two sub directory `user` and `post`, then create two schema file:
+Create two sub directory `user` and `post`, then define the entities' schema by create two schema file:
 
-- `user/schema.graphqls` 
+- `schemas/user_schema.graphqls` 
 
 ```
 # user schema
@@ -168,7 +175,7 @@ type User {
 }
 ```
 
-- `post/schema.graphqls`
+- `schemas/post_schema.graphqls`
 
 ```
 # post schema
@@ -197,7 +204,7 @@ type Query {
 
 Implement two resolvers:
 
-- `user/resolver.js`
+- `resolvers/user_resolver.js`
 
 ```javascript
 'use strict'
@@ -218,7 +225,7 @@ const userReolvers = {
 module.exports = userReolvers;
 ```
 
-- `post/resolver.js`
+- `resolvers/post_resolver.js`
 
 ```javascript
 'use strict'
@@ -304,8 +311,10 @@ The result is:
 }
 ```
 
+And also you can test the restful service by following curl command:
 
-
-
+```sh
+curl -i -H "Content-Type: application/json" -X POST -d '{"query":"\nquery {\n    user(id:1) {\n      uid\n      name\n      avatar\n    }\n    \n    post(id:2) {\n      pid\n      title\n      content\n      auhtor {\n        uid\n        name\n        avatar\n      }\n    }\n  }\n","variables":null}' http://127.0.0.1:8000/restful
+```
 
 
